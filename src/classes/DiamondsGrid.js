@@ -9,11 +9,17 @@ export default class DiamondsGrid {
         this.createDiamonds();
     }
 
+    fireEvent(){
+    this.diamonds.forEach(diamond=>{
+      diamond.emit("doAnimate");
+      console.log(diamond,"event fired")
+    })
+  }
+
     createDiamonds(){
         diamondGridConfig.forEach(diamondProps=>{
                 const diamond = new Diamond(diamondProps.x,diamondProps.y);
                 this.diamonds.push(diamond);
-                console.log(diamond);
                 this.container.addChild(diamond.container);
             })
         console.log(this.diamonds);

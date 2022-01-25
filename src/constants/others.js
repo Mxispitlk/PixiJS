@@ -5,3 +5,5 @@ export const BACKGROUND_MELON = "BACKGROUND_MELON";
 export const DIAMONDS = "Diamonds";
 export const DEVIL = "Devil";
 export const MELON = "Melon";
+export const START = "Start";
+export const BACK = "Back";

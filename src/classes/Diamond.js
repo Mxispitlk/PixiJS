@@ -16,9 +16,14 @@ export default class Diamond {
         this.container.sortableChildren = true;
         this.diamond = new PIXI.Sprite(globals.resources[SYMBOL_DIAMOND].texture);
         this.setDiamondCoordinates(x,y,this.diamond);
-        this.doAnimate(x,y);
-        // this.doAnimate();
+        this.addListener();
 
+    }
+
+    addListener(){
+        this.diamond.on("doAnimate", ()=>{
+            console.log(this.diamond,"I do animate catched")
+        })
     }
 
     createDiamond(){
@@ -48,7 +53,6 @@ export default class Diamond {
 
     rotateSunShine(){
         this.diamondSunshine.rotation += 0.001;
-
     }
 
     async scaleUp(){
@@ -69,6 +73,6 @@ export default class Diamond {
 
 
     update(dt) {
-        this.rotateSunShine();
+        // this.rotateSunShine();
     }
 }

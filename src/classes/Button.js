@@ -1,7 +1,7 @@
 import * as PIXI from "pixi.js"
 import {globals} from "../globalVariables/globals";
 import Diamonds from "../scenes/Diamonds";
-import {MELON,DEVIL,DIAMONDS} from "../constants/others";
+import {MELON, DEVIL, DIAMONDS, START} from "../constants/others";
 import Melons from "../scenes/Melons";
 import Devil from "../scenes/Devil";
 import MainScene from "../scenes/MainScene";
@@ -20,7 +20,7 @@ export default class Button {
         this.button = new PIXI.Graphics();
         this.button.on("mouseover",()=>this.handleMouseOver());
         this.button.on("mouseout",()=>this.handleMouseOut());
-        this.button.on("click",(e)=>this.handleClick(e,this));
+        this.button.on("click",(e)=>this.handleClick());
         this.button.lineStyle(3,0xFFFFFF);
         this.button.beginFill(0xFFFFFF,1);
         this.button.drawRoundedRect(0, 0, 200, 40, 15);
@@ -34,18 +34,20 @@ export default class Button {
 
     handleMouseOut(){
         this.button.alpha = 0.5
-
     }
 
-    handleClick(e,button){
-        if(button.name === DIAMONDS){
+    handleClick(){
+        if(this.name === DIAMONDS){
             globals.scene.startScene(new Diamonds());
-        }else if( button.name === DEVIL){
+        }else if( this.name === DEVIL){
             globals.scene.startScene(new Devil());
-        }else if( button.name === MELON){
+        }else if( this.name === MELON){
             globals.scene.startScene(new Melons());
+        }else if( this.name === START){
+            console.log(this.name , "asdasd");
+            globals.scene.doAnimate();
         }else{
-            globals.scene.startScene(new MainScene());;
+            globals.scene.startScene(new MainScene());
         }
     }
 

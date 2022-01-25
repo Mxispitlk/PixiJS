@@ -4,20 +4,26 @@ import { BACKGROUND_DIAMONDS} from "../constants/others";
 import Background from "../classes/Background";
 import Button from "../classes/Button";
 import DiamondsGrid from "../classes/DiamondsGrid";
+import { START,BACK } from "../constants/others";
 
 
 export default class Diamonds {
     constructor() {
         this.container = new PIXI.Container();
         this.createBackground();
-        this.createButtonBack("Back",200,100);
-        this.createButtonBack("Start",1700,100);
-        this.createButtonStartAnimate();
+        this.createButtonBack(BACK,200,100);
+        this.createButtonStartAnimate(START,1700,100);
         this.createDiamondGrid();
+
     }
 
-    createButtonStartAnimate(){
+    fireGrid(){
+        this.diamondGrid.fireEvent();
+    }
 
+    createButtonStartAnimate(text,x,y){
+        this.buttonStart = new Button( text,x,y);
+        this.container.addChild(this.buttonStart.container);
     }
 
     createBackground(){
@@ -27,20 +33,16 @@ export default class Diamonds {
     }
 
     createButtonBack(text,x,y){
-        this.button = new Button( text,x,y);
-        this.container.addChild(this.button.container);
+        this.buttonBack = new Button( text,x,y);
+        this.container.addChild(this.buttonBack.container);
     }
 
     createDiamondGrid() {
         this.diamondGrid = new DiamondsGrid();
         this.container.addChild(this.diamondGrid.container);
-
     }
 
     update(dt) {
         this.diamondGrid.update(dt);
     }
-
-
-
 }

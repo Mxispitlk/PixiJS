@@ -6,6 +6,11 @@ export class SceneManager {
         this.scene = null;
     }
 
+    doAnimate(){
+        console.log("doAnimate");
+        this.scene.fireGrid();
+    }
+
     startScene(scene) {
         if (this.scene) {
             this.scene.container.destroy();
