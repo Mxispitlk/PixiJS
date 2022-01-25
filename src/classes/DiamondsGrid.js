@@ -11,7 +11,7 @@ export default class DiamondsGrid {
 
     fireEvent(){
     this.diamonds.forEach(diamond=>{
-      diamond.emit("doAnimate");
+      diamond.sprite.emit("doAnimate");
       console.log(diamond,"event fired")
     })
   }
@@ -22,8 +22,7 @@ export default class DiamondsGrid {
                 this.diamonds.push(diamond);
                 this.container.addChild(diamond.container);
             })
-        console.log(this.diamonds);
-        }
+    }
 
     update(dt) {
         this.diamonds.forEach(diamond=>{
