@@ -8,6 +8,7 @@ import Diamonds from "../scenes/Diamonds";
 export class App {
     run() {
         // create canvas
+        window.PIXI = PIXI;
         this.app = new PIXI.Application({resizeTo:window});
         document.body.appendChild(this.app.view);
 
