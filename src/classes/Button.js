@@ -44,7 +44,6 @@ export default class Button {
         }else if( this.name === MELON){
             globals.scene.startScene(new Melons());
         }else if( this.name === START){
-            console.log(this.name , "asdasd");
             globals.scene.doAnimate();
         }else{
             globals.scene.startScene(new MainScene());

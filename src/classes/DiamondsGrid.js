@@ -1,32 +1,31 @@
 import * as PIXI from "pixi.js"
-import Diamond from "./Diamond";
 import {diamondGridConfig} from "../constants/diamondGridConfig";
+import AnimateDiamond from "./AnimateDiamond";
 
 export default class DiamondsGrid {
     constructor() {
-        this.diamonds = [];
+        this.animateDiamonds = [];
         this.container = new PIXI.Container();
         this.createDiamonds();
     }
 
     fireEvent(){
-    this.diamonds.forEach(diamond=>{
-      diamond.sprite.emit("doAnimate");
-      console.log(diamond,"event fired")
+    this.animateDiamonds.forEach(ad=>{
+     ad.container.emit("doAnimate");
     })
   }
 
     createDiamonds(){
         diamondGridConfig.forEach(diamondProps=>{
-                const diamond = new Diamond(diamondProps.x,diamondProps.y);
-                this.diamonds.push(diamond);
-                this.container.addChild(diamond.container);
+                const animateDiamond = new AnimateDiamond(diamondProps.x,diamondProps.y);
+                this.animateDiamonds.push(animateDiamond);
+                this.container.addChild(animateDiamond.container);
             })
     }
 
     update(dt) {
-        this.diamonds.forEach(diamond=>{
-            diamond.update(dt);
+        this.animateDiamonds.forEach(diamond=>{
+            // diamond.update(dt);
         })
     }
 }

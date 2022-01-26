@@ -23,13 +23,12 @@ export default class Diamond {
         this.isRemoveSunshine = false;
         this.container = new PIXI.Container();
         this.scale = 0.45;
-        this.scaleStep = 0.003;
+        this.scaleStep = 0.007;
         this.container.sortableChildren = true;
         this.sprite = new PIXI.Sprite(globals.resources[SYMBOL_DIAMOND].texture);
         this.setDiamondCoordinates(x,y,this.sprite);
         this.addSpriteToContainer(this.sprite);
         this.createDiamondParts(x,y);
-        this.addListener();
         this.container.sortableChildren = true;
         this.whiteParticle = new WhiteParticle(100,100);
    }
@@ -54,19 +53,10 @@ export default class Diamond {
         // this.container.addChild(this.overlay,this.spriteShine);
     }
 
-    addListener(){
-        this.sprite.on("doAnimate", ()=>{
-            this.doAnimate()
-        })
-    }
 
     removeSunshine(){
         this.container.removeChild(this.spriteSunshine,this.overlay,this.spriteShine);
         this.isRemoveSunshine = false;
-    }
-
-    createDiamond(){
-        this.container.addChild(this.sprite);
     }
 
 
@@ -84,16 +74,7 @@ export default class Diamond {
         setTimeout(() => {
             this.addSpriteToContainer(this.spriteShine,2); 
         }, 20);
-        
-        // this.explosion = new PIXI.Sprite(globals.resources[EXPLOSION_PARTICLE].texture)
-        // this.explosion.zIndex=1;
-        // this.setDiamondCoordinates(x,y,this.explosion);
-        // this.redParticle = new PIXI.Sprite(globals.resources[ONE_PARTICLE].texture)
-        // this.white = new PIXI.Sprite(globals.resources[WHITE_PARTICLE].texture)
-
-        // this.container.addChild(this.overlay,this.spriteShine);
-
-    }
+     }
 
     rotateSunShine(){
         this.spriteSunshine.rotation += 0.005;
