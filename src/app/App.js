@@ -1,9 +1,8 @@
 import * as PIXI from "pixi.js";
 import { Loader } from "../loader/Loader";
-import MainScene  from "../scenes/MainScene"
-import { globals } from "../globalVariables/globals";
+import MainScene from "../scenes/MainScene";
+import { Globals } from "../globalVariables/globals";
 import { SceneManager } from "../scenes/SceneManager";
-import Diamonds from "../scenes/Diamonds";
 
 export class App {
     run() {
@@ -14,17 +13,18 @@ export class App {
         document.body.appendChild(this.app.view);
 
         // add global scene manager to app stage
-        globals.scene = new SceneManager();
-        this.app.stage.addChild(globals.scene.container);
+        Globals.scene = new SceneManager();
+        this.app.stage.addChild(Globals.scene.container);
 
         // Setup ticker for update application
-        this.app.ticker.add(dt => globals.scene.update(dt,this.app.ticker.elapsedMS));
+        this.app.ticker.add(dt => Globals.scene.update(dt,this.app.ticker.elapsedMS));
+        Globals.ticker = this.app.ticker;
 
 
         // load sprites
         this.loader = new Loader(this.app.loader);
         this.loader.preload().then(() => {
-            globals.scene.startScene(new MainScene());
+            Globals.scene.startScene(new MainScene());
         });
     }
 }

@@ -1,4 +1,4 @@
-export const globals = {
+export const Globals = {
     resources: {},
     scene : null,
 }

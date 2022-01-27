@@ -1,48 +1,39 @@
 import * as PIXI from "pixi.js"
-import {globals} from "../globalVariables/globals";
+import {Globals} from "../globalVariables/globals";
 import { BACKGROUND_DIAMONDS} from "../constants/others";
 import Background from "../classes/Background";
-import Button from "../classes/Button";
-import DiamondsGrid from "../classes/DiamondsGrid";
 import { START,BACK } from "../constants/others";
+import Button from "../classes/Button";
 
 
 export default class Diamonds {
     constructor() {
         this.container = new PIXI.Container();
         this.createBackground();
-        this.createButtonBack(BACK,200,100);
-        this.createButtonStartAnimate(START,1700,100);
-        // this.createDiamondGrid();
+        this.createButtonBack();
+     }
+  // const button = new Button(btnX,btnY,text,id,width,height,this.textStyles,0x9bcfbe,0x389477,0.5,1,0x000000);
+     createButtonBack(){
+        this.createTextStyles();
+        this.buttonBack = new Button(100,100,BACK,"back_id",150,40,this.textStyles,0x9bcfbe,0xb50e33,0.5,1,0xcc788b);
+        this.container.addChild(this.buttonBack.container)
+     }
 
+    createTextStyles(){
+      this.textStyles = new PIXI.TextStyle({
+        fontFamily: 'Roboto',
+        fill: ['#ffffff'],
+        stroke: '#004620',
+        fontSize: 20,
+        fontWeight: 'lighter',
+      })
     }
 
-    fireGrid(){
-        this.diamondGrid.fireEvent();
+    createBackground() {
+        this.bg = new Background(BACKGROUND_DIAMONDS);
+        this.container.addChild(this.bg.sprite);
     }
-
-    createButtonStartAnimate(text,x,y){
-        this.buttonStart = new Button( text,x,y);
-        this.container.addChild(this.buttonStart.container);
-    }
-
-    createBackground(){
-        const texture = new PIXI.Sprite(globals.resources[BACKGROUND_DIAMONDS].texture);
-        this.bg = new Background(texture,1.0);
-        this.container.addChild(this.bg.container);
-    }
-
-    createButtonBack(text,x,y){
-        this.buttonBack = new Button( text,x,y);
-        this.container.addChild(this.buttonBack.container);
-    }
-
-    createDiamondGrid() {
-        this.diamondGrid = new DiamondsGrid();
-        this.container.addChild(this.diamondGrid.container);
-    }
-
     update(dt) {
-        this.diamondGrid.update(dt);
+
     }
 }

@@ -1,5 +1,5 @@
 import { loaderConfig } from "../globalVariables/loaderConfig";
-import { globals } from "../globalVariables/globals";
+import { Globals } from "../globalVariables/globals";
 
 
 export class Loader {
@@ -14,7 +14,7 @@ export class Loader {
                 this.loader.add(key, this.resources[key]);
             }
             this.loader.load((loader, resources) => {
-                globals.resources = resources;
+                Globals.resources = resources;
                 resolve();
             });
         });

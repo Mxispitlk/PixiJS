@@ -7,3 +7,6 @@ export const DEVIL = "Devil";
 export const MELON = "Melon";
 export const START = "Start";
 export const BACK = "Back";
+export const DIAMONDS_ID = "diamonds";
+export const MELONS_ID = "melons";
+export const DEVIL_ID = "devil";
