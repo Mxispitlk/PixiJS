@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js"
-import {DIAMONDS_ID} from "../constants/others";
+import {DIAMONDS_ID, START, START_ID} from "../constants/others";
 import {Globals} from "../globalVariables/globals";
 
 export default class Button {
@@ -37,13 +37,18 @@ export default class Button {
     this.button.buttonMode = true;
     this.button.on("mouseover",()=>this.handleMouseOver());
     this.button.on("mouseout",()=>this.handleMouseOut());
-    this.button.on("click",()=>this.handleClick());
+    this.button.on("click",()=>this.handleClick(this.id));
     this.fillButton(this.color,this.alpha);
     this.container.addChild(this.button);
   }
 
-  handleClick(){
-    Globals.scene.startScene(this.id);
+  handleClick(id){
+    if(id !== START_ID){
+      Globals.sceneManager.startScene(this.id);
+    }else{
+      console.log("Else reached")
+      Globals.sceneManager.actualScene.container.emit("start");
+    }
   }
 
   handleMouseOver(){

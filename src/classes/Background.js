@@ -8,6 +8,7 @@ export default class Background {
     this.sprite = new PIXI.Sprite(Globals.resources[resource].texture);
     this.sprite.width = window.innerWidth;
     this.sprite.height = window.innerHeight;
+    this.sprite.zIndex = -10;
 
   }
 

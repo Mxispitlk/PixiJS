@@ -1,4 +1,4 @@
 export const Globals = {
     resources: {},
-    scene : null,
+    sceneManager : null,
 }
