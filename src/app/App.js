@@ -18,12 +18,13 @@ export class App {
         this.app.stage.addChild(globals.scene.container);
 
         // Setup ticker for update application
-        this.app.ticker.add(dt => globals.scene.update(dt));
+        this.app.ticker.add(dt => globals.scene.update(dt,this.app.ticker.elapsedMS));
+
 
         // load sprites
         this.loader = new Loader(this.app.loader);
         this.loader.preload().then(() => {
-            globals.scene.startScene(new Diamonds());
+            globals.scene.startScene(new MainScene());
         });
     }
 }

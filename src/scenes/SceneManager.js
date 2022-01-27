@@ -7,7 +7,6 @@ export class SceneManager {
     }
 
     doAnimate(){
-        console.log("doAnimate");
         this.scene.fireGrid();
     }
 
@@ -19,7 +18,8 @@ export class SceneManager {
         this.container.addChild(this.scene.container);
     }
 
-    update(dt) {
+    update(dt,ticker) {
+        console.log(ticker)
         if (this.scene && this.scene.update) {
             this.scene.update(dt);
         }

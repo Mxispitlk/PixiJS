@@ -12,6 +12,7 @@ export default class DiamondOverlay {
     this.sprite.anchor.set(0.5);
     this.sprite.x = window.innerWidth / 2 + x;
     this.sprite.y = window.innerHeight / 2 + y;
+    this.sprite.zIndex = -1;
     this.sprite.scale.set(scale);
   }
 
@@ -20,7 +21,7 @@ export default class DiamondOverlay {
   }
 
   removeOverlayFromContainer(container){
-    container.remove(this.sprite);
+    container.removeChild(this.sprite);
   }
 
 }

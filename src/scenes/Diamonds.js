@@ -13,7 +13,7 @@ export default class Diamonds {
         this.createBackground();
         this.createButtonBack(BACK,200,100);
         this.createButtonStartAnimate(START,1700,100);
-        this.createDiamondGrid();
+        // this.createDiamondGrid();
 
     }
 

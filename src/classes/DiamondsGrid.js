@@ -10,10 +10,10 @@ export default class DiamondsGrid {
     }
 
     fireEvent(){
-    this.animateDiamonds.forEach(ad=>{
-     ad.container.emit("doAnimate");
-    })
-  }
+      this.animateDiamonds.forEach(diamond=>{
+        diamond.container.emit("runAnimation");
+      });
+    }
 
     createDiamonds(){
         diamondGridConfig.forEach(diamondProps=>{
@@ -25,7 +25,7 @@ export default class DiamondsGrid {
 
     update(dt) {
         this.animateDiamonds.forEach(diamond=>{
-            // diamond.update(dt);
+            diamond.update(dt);
         })
     }
 }
