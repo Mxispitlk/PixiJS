@@ -3,12 +3,6 @@ import { BACKGROUND_DIAMONDS} from "../constants/others";
 import Background from "../classes/Background";
 import { START,BACK,BACK_ID,START_ID } from "../constants/others";
 import Button from "../classes/Button";
-import Diamond from "../classes/Diamond";
-import DiamondShine from "../classes/DiamondShine";
-import DiamondSunshine from "../classes/DiamondSunshine";
-import Explosion from "../classes/Explosion";
-import DiamondOverlay from "../classes/DiamondOverlay";
-import WhiteParticle from "../classes/WhiteParticle";
 import DiamondWithShine from "../classes/DiamondWithShine";
 import {diamondGridConfig} from "../constants/diamondGridConfig";
 
@@ -22,16 +16,6 @@ export default class Diamonds {
       this.createButtons();
       this.createDiamondsWithShine()
       this.isAnimating = false;
-      // this.createDiamond();
-      // this.createDiamondSunshine();
-      // this.createExplosion();
-      // this.createDiamondOverlay();
-      // this.createWhiteParticles();
-      // this.actualTime = 0;
-      // this.isAnimating = false;
-      // this.container.sortableChildren = true;
-      // this.isSunshinePresent = false;
-      // this.isFirstParticle = false;
       this.addListeners();
      }
 
@@ -52,15 +36,13 @@ export default class Diamonds {
 
      addListeners() {
        this.container.on("start", () => {
-         console.log("start animation");
          this.isAnimating = true;
-         this.diamondsWithShine.forEach(diamond => diamond.actualTime = 0)
-         console.log("isAnimating :", this.isAnimating)
-         // this.isFirstParticle = true;
-         // this.diamond.isScalingUp= true;
-         // this.diamondShine.isScalingUp = true;
-         // this.container.addChild(this.diamondOverlay.sprite);
-       });
+         this.diamondsWithShine.forEach(diamond => {
+           diamond.isFirstScale = true;
+           diamond.actualTime = 0
+         })
+
+        });
      }
 
      createButtons(){

@@ -3,14 +3,14 @@ import {Globals} from "../globalVariables/globals";
 import {
   DIAMOND_SHINE,
   DIAMOND_SUNSHINE,
-  EXPLOSION_PARTICLE,
-  ONE_PARTICLE,
   SYMBOL_DIAMOND,
-  WHITE_PARTICLE
 } from "../constants/diamon";
+import Explosion from "./Explosion";
+import Particles from "./Particles";
 
 export default class DiamondWithShine {
   constructor(x, y) {
+    this.particles = [];
     this.container = new PIXI.Container();
     this.container.sortableChildren = true;
     this.x = x;
@@ -27,30 +27,37 @@ export default class DiamondWithShine {
   }
 
   createSprites() {
-    this.diamond = new PIXI.Sprite(Globals.resources[SYMBOL_DIAMOND].texture);
-    this.container.addChild(this.diamond);
-    this.diamondShine = new PIXI.Sprite(Globals.resources[DIAMOND_SHINE].texture);
-    this.container.addChild(this.diamondShine);
     this.diamondSunShine = new PIXI.Sprite(Globals.resources[DIAMOND_SUNSHINE].texture);
     this.container.addChild(this.diamondSunShine);
-    this.explosion = new PIXI.Sprite(Globals.resources[EXPLOSION_PARTICLE].texture);
-    this.whiteParticle = new PIXI.Sprite(Globals.resources[WHITE_PARTICLE].texture);
-    this.redParticle = new PIXI.Sprite(Globals.resources[ONE_PARTICLE].texture);
+    this.diamond = new PIXI.Sprite(Globals.resources[SYMBOL_DIAMOND].texture);
+    this.container.addChild(this.diamond);
+    this.explosion = new Explosion();
+    this.container.addChild(this.explosion.sprite);
+    this.diamondShine = new PIXI.Sprite(Globals.resources[DIAMOND_SHINE].texture);
+    this.container.addChild(this.diamondShine);
+    for(let i = 0 ; i <  100;i++){
+
+        const particles = new Particles(this.container.width,this.container.height);
+        this.particles.push(particles);
+        this.container.addChild(particles.white,particles.red);
+      }
   }
 
   setDiamondProperties() {
     //Diamond
     this.diamond.scale.set(this.startScale);
     this.diamond.anchor.set(0.5);
+    this.diamond.zIndex = 1;
 
     // Diamond shine
     this.diamondShine.anchor.set(0.5);
     this.diamondShine.alpha = 0;
     this.diamondShine.scale.set(this.startScale);
+    this.diamondShine.zIndex = 100;
 
     //Diamond sunshine
     this.diamondSunShine.anchor.set(0.5);
-    this.diamondSunShine.zIndex = -1;
+    this.diamondSunShine.zIndex = -5;
     this.diamondSunShine.scale.set(0.55);
     this.diamondSunShine.alpha = 0;
     this.diamondSunShine.x -= 10
@@ -66,11 +73,15 @@ export default class DiamondWithShine {
     if (this.scaleUpConditions()) {
       //Diamond
       this.setScaleUp(this.diamond);
-      this.setAlphaDown(this.diamond, this.alphaStep);
+      if(this.isFirstScale){
+        this.setAlphaDown(this.diamond, this.alphaStep);
+      }
 
       //Diamond shine
-      this.setScaleUp(this.diamondShine);
-      this.setAlphaUp(this.diamondShine, this.alphaStep);
+      if (this.isFirstScale) {
+        this.setScaleUp(this.diamondShine);
+        this.setAlphaUp(this.diamondShine, this.alphaStep);
+      }
     }
   }
 
@@ -117,7 +128,7 @@ export default class DiamondWithShine {
   }
 
   scaleUpConditions() {
-    return (this.actualTime > 2 && this.actualTime < 15) || (this.actualTime > 28 && this.actualTime <= 40);
+    return (this.actualTime > 2 && this.actualTime < 15) || (this.actualTime > 29 && this.actualTime <= 40);
   }
 
   scaleDownConditions() {
@@ -134,16 +145,18 @@ export default class DiamondWithShine {
     }
   }
 
-  explode() {
-
-  }
 
   update(dt, isAnimating) {
     if (isAnimating) {
       this.actualTime += dt;
       this.scaleUp();
       this.scaleDown();
-      this.sunshine()
+      this.sunshine();
+      this.explosion.update(this.actualTime);
+      this.particles.forEach(particle =>particle.update(dt,this.actualTime));
+    }
+    if(this.actualTime > 28 && this.isFirstScale){
+      this.isFirstScale = false;
     }
   }
 }
