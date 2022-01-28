@@ -9,78 +9,58 @@ import DiamondSunshine from "../classes/DiamondSunshine";
 import Explosion from "../classes/Explosion";
 import DiamondOverlay from "../classes/DiamondOverlay";
 import WhiteParticle from "../classes/WhiteParticle";
+import DiamondWithShine from "../classes/DiamondWithShine";
+import {diamondGridConfig} from "../constants/diamondGridConfig";
 
 
 export default class Diamonds {
     constructor() {
+      this.diamondsWithShine = [];
       this.container = new PIXI.Container();
       this.container.interactive = true;
       this.createBackground();
       this.createButtons();
-      this.createDiamond();
-      this.createDiamondSunshine();
-      this.createExplosion();
-      this.createDiamondOverlay();
-      this.createWhiteParticles();
-      this.actualTime = 0;
+      this.createDiamondsWithShine()
       this.isAnimating = false;
-      this.container.sortableChildren = true;
-      this.isSunshinePresent = false;
-      this.isFirstParticle = false;
+      // this.createDiamond();
+      // this.createDiamondSunshine();
+      // this.createExplosion();
+      // this.createDiamondOverlay();
+      // this.createWhiteParticles();
+      // this.actualTime = 0;
+      // this.isAnimating = false;
+      // this.container.sortableChildren = true;
+      // this.isSunshinePresent = false;
+      // this.isFirstParticle = false;
       this.addListeners();
      }
-// 1. - 1-120 -80  2. - -30 +38 3. +25 - 8
-  createWhiteParticles() {
-    this.whiteParticle1 = new WhiteParticle(-120, -80);
-    this.whiteParticle2 = new WhiteParticle(-35, 38);
-    this.whiteParticle3 = new WhiteParticle(25, -8);
-    this.container.addChild(this.whiteParticle1.sprite,this.whiteParticle3.sprite,this.whiteParticle2.sprite);
+
+  createDiamondsWithShine(){
+    diamondGridConfig.forEach(dp=>{
+      this.createDiamondWithShine(dp.x,dp.y)
+    })
   }
 
-    createDiamondOverlay(){
-      this.diamondOverlay = new DiamondOverlay();
 
-    }
+  createDiamondWithShine(x,y){
+      const diamondWithShine = new DiamondWithShine(x,y);
+      this.diamondsWithShine.push(diamondWithShine);
+      this.container.addChild(diamondWithShine.container);
+  }
 
-     createExplosion(){
-      this.explosion = new Explosion(10 ,20);
-      // this.container.addChild(this.explosion.sprite);
-    }
 
-    createDiamondSunshine(){
-      this.diamondSunshine = new DiamondSunshine(5,80);
-    }
 
-     createDiamond(){
-      this.diamond = new Diamond(40,60,60,80);
-      this.container.addChild(this.diamond.sprite);
-    }
-
-    createDiamondShine(){
-      this.diamondShine = new DiamondShine(20,40);
-      this.container.addChild(this.diamondShine.sprite);
-    }
-
-     addListeners(){
+     addListeners() {
        this.container.on("start", () => {
-         this.resetToDefault();
+         console.log("start animation");
          this.isAnimating = true;
-         this.isFirstParticle = true;
-         this.diamond.isScalingUp= true;
-         this.diamondShine.isScalingUp = true;
-         this.container.addChild(this.diamondOverlay.sprite);
+         this.diamondsWithShine.forEach(diamond => diamond.actualTime = 0)
+         console.log("isAnimating :", this.isAnimating)
+         // this.isFirstParticle = true;
+         // this.diamond.isScalingUp= true;
+         // this.diamondShine.isScalingUp = true;
+         // this.container.addChild(this.diamondOverlay.sprite);
        });
-
-
-     }
-     resetToDefault(){
-       this.isSunshinePresent = false;
-       this.actualTime = 0;
-       this.isFirstParticle = false;
-       this.createDiamondShine();
-       this.createDiamondSunshine();
-       this.createExplosion();
-       this.createDiamondOverlay()
      }
 
      createButtons(){
@@ -116,28 +96,12 @@ export default class Diamonds {
     }
     update(dt) {
       if(this.isAnimating){
-        this.actualTime += dt;
-        this.diamond.update(dt,this.actualTime);
-        this.diamondShine.update(dt,this.actualTime);
-        this.diamondSunshine.update(dt,this.actualTime);
-        this.explosion.update(dt,this.actualTime);
-        if(this.actualTime >= 5 && !this.isSunshinePresent){
-          this.isSunshinePresent = true;
-          this.container.addChild(this.diamondSunshine.sprite);
-          this.diamondSunshine.isRotating = true;
-        }
-        if(this.actualTime >= 8 && this.actualTime < 15 && !this.explosion.isExploding){
-          this.explosion.isExploding = true;
-          this.container.addChild(this.explosion.sprite);
+        this.diamondsWithShine.forEach(diamond=>{
+          diamond.update(dt,this.isAnimating);
+        })
 
-        }
-        if(this.actualTime >= 70){
-          this.container.removeChild(this.diamondOverlay.sprite);
-        }
       }
-      if(this.isFirstParticle){
-        this.whiteParticle1.update(this.container.width,this.container.height,this.diamondShine.isScalingUp,this.diamondShine.isScalingDown)
-      }
+
 
     }
 }

@@ -46,7 +46,6 @@ export default class Button {
     if(id !== START_ID){
       Globals.sceneManager.startScene(this.id);
     }else{
-      console.log("Else reached")
       Globals.sceneManager.actualScene.container.emit("start");
     }
   }
