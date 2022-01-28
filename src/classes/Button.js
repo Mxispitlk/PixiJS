@@ -57,8 +57,8 @@ export default class Button {
   }
 
   handleMouseOut(){
-    this.button.destroy();
-    this.createButton();
+    this.button.clear();
+    this.fillButton(this.color,this.alpha);
   }
 
   fillButton(color,alpha){

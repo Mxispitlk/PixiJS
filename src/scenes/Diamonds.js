@@ -8,6 +8,7 @@ import DiamondShine from "../classes/DiamondShine";
 import DiamondSunshine from "../classes/DiamondSunshine";
 import Explosion from "../classes/Explosion";
 import DiamondOverlay from "../classes/DiamondOverlay";
+import WhiteParticle from "../classes/WhiteParticle";
 
 
 export default class Diamonds {
@@ -20,12 +21,21 @@ export default class Diamonds {
       this.createDiamondSunshine();
       this.createExplosion();
       this.createDiamondOverlay();
+      this.createWhiteParticles();
       this.actualTime = 0;
       this.isAnimating = false;
       this.container.sortableChildren = true;
       this.isSunshinePresent = false;
+      this.isFirstParticle = false;
       this.addListeners();
      }
+// 1. - 1-120 -80  2. - -30 +38 3. +25 - 8
+  createWhiteParticles() {
+    this.whiteParticle1 = new WhiteParticle(-120, -80);
+    this.whiteParticle2 = new WhiteParticle(-35, 38);
+    this.whiteParticle3 = new WhiteParticle(25, -8);
+    this.container.addChild(this.whiteParticle1.sprite,this.whiteParticle3.sprite,this.whiteParticle2.sprite);
+  }
 
     createDiamondOverlay(){
       this.diamondOverlay = new DiamondOverlay();
@@ -55,7 +65,7 @@ export default class Diamonds {
        this.container.on("start", () => {
          this.resetToDefault();
          this.isAnimating = true;
-
+         this.isFirstParticle = true;
          this.diamond.isScalingUp= true;
          this.diamondShine.isScalingUp = true;
          this.container.addChild(this.diamondOverlay.sprite);
@@ -66,6 +76,7 @@ export default class Diamonds {
      resetToDefault(){
        this.isSunshinePresent = false;
        this.actualTime = 0;
+       this.isFirstParticle = false;
        this.createDiamondShine();
        this.createDiamondSunshine();
        this.createExplosion();
@@ -123,6 +134,9 @@ export default class Diamonds {
         if(this.actualTime >= 70){
           this.container.removeChild(this.diamondOverlay.sprite);
         }
+      }
+      if(this.isFirstParticle){
+        this.whiteParticle1.update(this.container.width,this.container.height,this.diamondShine.isScalingUp,this.diamondShine.isScalingDown)
       }
 
     }

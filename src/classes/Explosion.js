@@ -17,16 +17,19 @@ export default class Explosion {
     const blurFilter1 = new PIXI.filters.BlurFilter();
     this.sprite.x = window.innerWidth /2 ;
     this.sprite.y = window.innerHeight /2 ;
-    this.sprite.filters = [blurFilter1];
+    // this.sprite.filters = [blurFilter1];
+    this.sprite.alpha = 0.01;
     this.sprite.anchor.set(0.5);
     this.sprite.scale.set(0.01);
     this.sprite.zIndex = 5;
+    this.sprite.angle = 60;
   }
 
   scaleUp(dt){
     console.log("explosion scale up")
     this.sprite.scale.x += 0.05 ;
     this.sprite.scale.y += 0.05 ;
+    this.sprite.alpha += 0.05;
   }
   remove(){
     this.isExploding = false;
