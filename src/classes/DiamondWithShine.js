@@ -15,7 +15,6 @@ export default class DiamondWithShine {
     this.container.sortableChildren = true;
     this.x = x;
     this.y = y;
-    this.actualTime = 0;
     this.isAnimating = false;
     this.scaleStep = 0.008;
     this.startScale = 0.45;
@@ -36,7 +35,6 @@ export default class DiamondWithShine {
     this.diamondShine = new PIXI.Sprite(Globals.resources[DIAMOND_SHINE].texture);
     this.container.addChild(this.diamondShine);
     for(let i = 0 ; i <  100 ;i++){
-      console.log(this.x,this.y , "coordinastes diamond");
         const particles = new Particles(this.x,this.y,i);
         this.particles.push(particles);
         this.container.addChild(particles.white,particles.red);

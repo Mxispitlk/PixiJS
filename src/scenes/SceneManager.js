@@ -1,5 +1,4 @@
 import * as PIXI from "pixi.js";
-import {Globals} from "../globalVariables/globals";
 import {DEVIL_ID, MELONS_ID, DIAMONDS_ID, START_ID} from "../constants/others";
 import Diamonds from "./Diamonds";
 import Devil from "./Devil";

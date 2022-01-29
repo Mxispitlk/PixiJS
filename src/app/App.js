@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js";
 import { Loader } from "../loader/Loader";
-import {DIAMONDS_ID} from "../constants/others";
+import {DEVIL_ID} from "../constants/others";
 import { Globals } from "../globalVariables/globals";
 import { SceneManager } from "../scenes/SceneManager";
 
@@ -24,7 +24,7 @@ export class App {
         // load sprites
         this.loader = new Loader(this.app.loader);
         this.loader.preload().then(() => {
-            Globals.sceneManager.startScene(DIAMONDS_ID);
+            Globals.sceneManager.startScene(DEVIL_ID);
         });
     }
 }
