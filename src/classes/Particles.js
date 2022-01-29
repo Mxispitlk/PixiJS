@@ -1,26 +1,36 @@
 import * as PIXI from "pixi.js"
 import {Globals} from "../globalVariables/globals";
-import {EXPLOSION_PARTICLE, ONE_PARTICLE, WHITE_PARTICLE} from "../constants/diamon";
+import { ONE_PARTICLE, WHITE_PARTICLE} from "../constants/diamon";
 
 export default class Particles {
-  constructor(width,height) {
+  constructor(x,y,i) {
     this.white = new PIXI.Sprite(Globals.resources[WHITE_PARTICLE].texture);
     this.red = new PIXI.Sprite(Globals.resources[ONE_PARTICLE].texture);
     this.isDefault = true;
-    this.direction = Math.random();
+    this.originX = x;
+    this.originY = y;
+    this.distance = i ;
+    this.angle = Math.random() * Math.PI * 2;
+    this.coordinates = this.randomPosition(x,y,i);
     this.randomScale = Math.random();
-    this.x = Math.floor(Math.random() * 60 );
-    this.y = Math.floor(Math.random() * 100);
-    this.setProperties(this.white);
-    this.setProperties(this.red);
+    this.setProperties(this.white,x,y);
+    this.setProperties(this.red,x,y);
   }
 
-  setProperties(sprite){
+  randomPosition(originX,originY){
+    let r =  Math.sqrt(Math.random()) * 30  ;
+    let x = originX + r * Math.cos(this.angle);
+    let y = originY + r * Math.sin(this.angle);
+    return { x, y };
+  }
+
+
+  setProperties(sprite,x,y){
     sprite.anchor.set(0.5);
     sprite.scale.set(this.randomScale);
     sprite.zIndex = 20;
-    sprite.x = this.x;
-    sprite.y = this.y;
+    sprite.x =  x - this.coordinates.x;
+    sprite.y =  y - this.coordinates.y;
     sprite.alpha = 0;
   }
 
@@ -38,81 +48,21 @@ export default class Particles {
 
     }
     if(actualTime > 20 && actualTime < 50){
-      this.randomMove();
+      this.moveByAngle();
     }
 
   }
 
-  randomMove(dt){
-    const randomX = Math.random();
-    const randomY = Math.random();
-    const number = 20;
-    if(this.direction < 0.125){
-      this.moveTop(randomY,number);
-    }else if(this.direction >= 0.125 && this.direction < 0.25){
-      this.moveTopRight(randomX,randomY,number);
-    }else if(this.direction >= 0.25 && this.direction < 0.375){
-      this.moveRight(randomX,number);
-    }else if(this.direction >= 0.375 && this.direction < 0.5){
-      this.moveBottomRight(randomX,randomY,number);
-    }else if(this.direction >= 0.5 && this.direction < 0.625){
-      this.moveBottom(randomX,randomY,number);
-    }else if(this.direction >= 0.625 && this.direction < 0.75){
-      this.moveBottomLeft(randomX,randomY,number);
-    }else if(this.direction >= 0.75 && this.direction < 0.875){
-      this.moveLeft(dt);
-    }else {
-      this.moveTopLeft(dt);
-    }
+  moveByAngle(){
+    const randomX = Math.random()  * 0.13 * this.distance  ;
+    const randomY = Math.random()  * 0.13 * this.distance;
+
+    this.white.x += (randomX * Math.cos(this.angle)) ;
+    this.white.y += (randomY * Math.sin(this.angle)) ;
+    this.red.x += (randomX * Math.cos(this.angle)) ;
+    this.red.y += (randomY * Math.sin(this.angle)) ;
   }
 
-  moveTopLeft(dt){
-    this.white.x -= dt ;
-    this.white.y -= dt ;
-    this.red.x -= dt ;
-    this.red.y -= dt ;
-  }
-
-  moveLeft(dt){
-    this.white.x -= dt ;
-    this.red.x -= dt  ;
-  }
-
-  moveBottomLeft(randomX,randomY,number){
-    this.white.x -= (randomX * number) / 2;
-    this.white.y += (randomY * number) / 2;
-    this.red.x -= (randomX * number) / 2;
-    this.red.y += (randomY * number) / 2;
-  }
-
-  moveBottom(randomY,number){
-    this.white.y += (randomY * number) / 2;
-    this.red.y += (randomY * number) / 2;
-  }
-
-  moveBottomRight(randomX,randomY,number){
-    this.white.x += (randomX * number) / 2;
-    this.white.y += (randomY * number) / 2;
-    this.red.x += (randomX * number) / 2;
-    this.red.y += (randomY * number) / 2;
-  }
-
-  moveRight(randomX,number){
-    this.white.x += (randomX * number) / 2;
-    this.red.x += (randomX * number) / 2;
-  }
-
-  moveTopRight(randomX,randomY,number){
-    this.white.x += (randomX * number) / 2;
-    this.white.y -= (randomY * number) / 2;
-    this.red.x += (randomX * number) / 2;
-    this.red.y -= (randomY * number) / 2;
-  }
-
-  moveTop(randomY,number){
-    this.white.y -= (randomY * number) / 2;
-    this.red.y -= (randomY * number) / 2;
-  }
 
   update(dt,actualTime){
     if(actualTime >= 17){
@@ -126,8 +76,9 @@ export default class Particles {
       this.moveParticles(dt,actualTime)
     }
     if(actualTime > 60 && !this.isDefault){
-      this.setProperties(this.white);
-      this.setProperties(this.red);
+      this.setProperties(this.white,this.originX,this.originY);
+      this.setProperties(this.red,this.originX,this.originY);
+      this.isDefault = true;
     }
   }
 }
