@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js";
 import { Loader } from "../loader/Loader";
-import {} from "../constants/others";
+import {MELONS_ID} from "../constants/others";
 import { Globals } from "../globalVariables/globals";
 import { SceneManager } from "../scenes/SceneManager";
 
@@ -23,7 +23,7 @@ export class App {
         // load sprites
         this.loader = new Loader(this.app.loader);
         this.loader.preload().then(() => {
-            Globals.sceneManager.startScene("MAIN");
+            Globals.sceneManager.startScene("main");
         });
     }
 }
