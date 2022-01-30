@@ -1,3 +1,6 @@
+export const FIRE_UP = "FIRE_UP"
+export const FIRE_MIDDLE = "FIRE_MIDDLE"
+export const FIRE_DOWN = "FIRE_DOWN"
 // Devil Border
 export const WILD_EXPAND_DOWN_BORDER = "WILD_EXPAND_DOWN_BORDER";
 export const WILD_EXPAND_UP_BORDER = "WILD_EXPAND_UP_BORDER";
