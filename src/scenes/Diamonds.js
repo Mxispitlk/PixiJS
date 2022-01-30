@@ -19,7 +19,14 @@ export default class Diamonds {
         this.isAnimating = false;
         this.addListeners();
         this.actualTime = 0;
+        // this.scale();
     }
+
+
+    // scale(){
+    //     this.container.scale.x =1;
+    //     this.container.scale.y =1;
+    // }
 
     createDiamondsWithShine() {
         diamondGridConfig.forEach(dp => {

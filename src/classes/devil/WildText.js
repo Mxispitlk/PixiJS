@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js"
-import {Globals} from "../globalVariables/globals";
-import {WILD_DEVIL_TEXT} from "../constants/devil";
+import {Globals} from "../../globalVariables/globals";
+import {WILD_DEVIL_TEXT} from "../../constants/devil";
 
 export default class WildText {
   constructor() {
